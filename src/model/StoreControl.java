@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import customException.CurrentDayException;
+import customException.NotGiveAccessException;
 import customException.RepeatPersonException;
 
 public class StoreControl {
@@ -11,6 +13,7 @@ public class StoreControl {
 	
 	public StoreControl() {
 		super();
+		people = new ArrayList<Person>();
 	}
 
 	public int getCont() {
@@ -21,11 +24,11 @@ public class StoreControl {
 		return people;
 	}
 	
-	public void addPerson(String id, String type) throws Exception{
+	public void addPerson(String id, String type) throws RepeatPersonException{
 		for(int i=0;i<people.size();i++ ) {
 			Person current = people.get(i);
 			if(current.getId().equals(id)) {
-				throw new Exception();
+				throw new RepeatPersonException(id);
 			}else {
 				Person newPerson = new Person(id,type);
 				people.add(newPerson);
@@ -43,16 +46,16 @@ public class StoreControl {
 		}
 		return seached;
 	}
-	public void joinToStore(String id, String type, int currentDay)throws Exception{
+	public void joinToStore(String id, String type, int currentDay)throws NotGiveAccessException, CurrentDayException{
 		Person current=searchPerson(id);
 		int penultimo=Integer.parseInt(current.getId().charAt(current.getId().length()-2)+"");
 		
 		if(penultimo%2!=0 && currentDay%2==0) {
-			throw new Exception();
+			throw new CurrentDayException();
 		}else if(penultimo%2==0 && currentDay%2!=0) {
-			throw new Exception();
+			throw new CurrentDayException();
 		}else if(type=="TI") {
-			throw new Exception();
+			throw new NotGiveAccessException(type);
 		}
 	}
 }
