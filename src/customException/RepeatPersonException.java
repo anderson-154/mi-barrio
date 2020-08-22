@@ -4,10 +4,11 @@ package customException;
 public class RepeatPersonException extends Exception {
 
 	private String repeatedId;
-	
+
 	public RepeatPersonException(String repeatedId) {
 		super();
 		this.repeatedId=repeatedId;
+
 	}
 	
 	@Override
